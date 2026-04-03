@@ -1,0 +1,55 @@
+<app-header></app-header>
+
+<div class="booking-layout">
+  <!-- Left Column: Branding -->
+  <div class="branding-column">
+    <div class="branding-content">
+      <img [src]="brandingImage" alt="B And Smile" class="branding-img">
+      <div class="overlay-text">
+        <p>Prenez rendez vous</p>
+        <p>en un clic</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Center Column: Calendar & Times -->
+  <div class="calendar-column">
+    <div *ngIf="!showForm" class="calendar-card">
+      <app-calendar></app-calendar>
+    </div>
+    
+    <div *ngIf="!showForm" class="slots-section">
+      <div class="filter-controls">
+        <button [class.active]="currentFilter === 'all'" (click)="afficherTous()">Toutes</button>
+        <button [class.active]="currentFilter === 'matin'" (click)="afficherMatin()">Matin</button>
+        <button [class.active]="currentFilter === 'apres-midi'" (click)="afficherApresMidi()">Aprés Midi</button>
+      </div>
+
+      <div class="slots-grid">
+        <button *ngFor="let creneau of creneauxAffiches" (click)="prendreRendezVous(creneau)" class="slot-button">
+          {{ creneau }}
+        </button>
+      </div>
+
+      <div *ngIf="creneauxAffiches.length === 0 && !errorMessage" class="no-availability-message">
+        Aucun rendez-vous disponible pour cette date
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+    </div>
+
+    <!-- The Form replacing calendar and slots -->
+    <div *ngIf="showForm" class="form-container-embedded">
+      <app-appointment-form [clinicId]="clinicId" [daterdv]="rdvSelectedDateTime"></app-appointment-form>
+    </div>
+  </div>
+
+  <!-- Right Column: Map -->
+  <div class="map-column">
+    <img src="assets/img/map.jpg" alt="Map" class="map-image">
+  </div>
+</div>
+
+<app-footer></app-footer>

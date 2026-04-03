@@ -1,0 +1,126 @@
+<div class="form-wrapper">
+  <div class="form-container">
+    <h2>Prendre un Rendez-vous</h2>
+    <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+      
+      <div class="form-row">
+        <div class="form-group half-width">
+          <label>Civilité <span class="required-star">*</span></label>
+          <div class="radio-group">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" formControlName="civlite" value="Monsieur"> Monsieur
+            </label>
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" formControlName="civlite" value="Madame"> Madame
+            </label>
+          </div>
+          <div *ngIf="appointmentForm.get('civlite')?.invalid && appointmentForm.get('civlite')?.touched" class="invalid-feedback">
+            La civilité est requise.
+          </div>
+        </div>
+        <div class="form-group half-width">
+          <label for="dateNaissance">Date de Naissance <span class="required-star">*</span></label>
+          <div class="date-picker-container">
+            <input matInput [matDatepicker]="birthPicker" formControlName="dateNaissance" id="dateNaissance" class="form-control" placeholder="JJ/MM/AAAA" [matDatepickerFilter]="dateOfBirthFilter">
+            <mat-datepicker-toggle matSuffix [for]="birthPicker"></mat-datepicker-toggle>
+            <mat-datepicker #birthPicker></mat-datepicker>
+          </div>
+          <div *ngIf="appointmentForm.get('dateNaissance')?.invalid && appointmentForm.get('dateNaissance')?.touched" class="invalid-feedback">
+            La date de naissance est requise.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group half-width">
+          <label for="nom">Nom <span class="required-star">*</span></label>
+          <input type="text" class="form-control" id="nom" formControlName="nom" placeholder="Votre nom">
+          <div *ngIf="appointmentForm.get('nom')?.invalid && appointmentForm.get('nom')?.touched" class="invalid-feedback">
+            Le nom est requis.
+          </div>
+        </div>
+        <div class="form-group half-width">
+          <label for="prenom">Prénom <span class="required-star">*</span></label>
+          <input type="text" class="form-control" id="prenom" formControlName="prenom" placeholder="Votre prénom">
+          <div *ngIf="appointmentForm.get('prenom')?.invalid && appointmentForm.get('prenom')?.touched" class="invalid-feedback">
+            Le prénom est requis.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group half-width">
+          <label for="email">Email <span class="required-star">*</span></label>
+          <input type="email" class="form-control" id="email" formControlName="email" placeholder="exemple@mail.com">
+          <div *ngIf="appointmentForm.get('email')?.invalid && appointmentForm.get('email')?.touched" class="invalid-feedback">
+            Une adresse email valide est requise.
+          </div>
+        </div>
+        <div class="form-group half-width">
+          <label for="telephone">Téléphone <span class="required-star">*</span></label>
+          <input type="tel" class="form-control" id="telephone" formControlName="telephone" placeholder="+41 00 000 00 00">
+          <div *ngIf="appointmentForm.get('telephone')?.invalid && appointmentForm.get('telephone')?.touched" class="invalid-feedback">
+            Un numéro de téléphone est requis.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="adresse">Adresse <span class="required-star">*</span></label>
+        <input type="text" class="form-control" id="adresse" formControlName="adresse" placeholder="Votre adresse complète">
+        <div *ngIf="appointmentForm.get('adresse')?.invalid && appointmentForm.get('adresse')?.touched" class="invalid-feedback">
+          L'adresse est requise.
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group half-width">
+          <label for="acte">Acte <span class="required-star">*</span></label>
+          <select class="form-control" id="acte" formControlName="acte" (change)="onActeChange($event)">
+            <option value="" disabled>Sélectionnez l'acte</option>
+            <option *ngFor="let acte of actes" [value]="acte.description">{{ acte.description }}</option>
+            <option value="Consultation">Consultation bilan adulte 115.06</option>
+            <option value="Consultation">Consultation bilan enfant 115.06 CHF</option>
+            <option value="Consultation">Consultation avis 115.06</option>
+            <option value="Blanchiment">Blanchiment (5min) 40.26 CHF</option>
+            <option value="Détartrage">Détartrage 161.04 CHF</option>
+            <option value="Autre">Autre</option>
+          </select>
+          <div *ngIf="appointmentForm.get('acte')?.invalid && appointmentForm.get('acte')?.touched" class="invalid-feedback">
+            L'acte est requis.
+          </div>
+        </div>
+        <div class="form-group half-width">
+          <label for="daterdv">Date du rendez-vous</label>
+          <input type="text" class="form-control" id="daterdv" formControlName="daterdv" readonly style="background-color: #f1f5f9; color: #81c7e1; font-weight: 600;">
+        </div>
+      </div>
+      
+      <input type="hidden" formControlName="cliniques" />
+
+      <button type="submit" class="btn-submit" [disabled]="!appointmentForm.valid">Confirmer le rendez-vous</button>
+
+    </form>
+  </div>
+</div>
+
+<!-- Success Modal Overlay -->
+<div class="success-overlay" *ngIf="showSuccessModal" (click)="showSuccessModal = false">
+  <div class="success-modal" (click)="$event.stopPropagation()">
+    <div class="success-icon">
+      <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle class="success-circle" cx="26" cy="26" r="25" stroke="#81c7e1" stroke-width="2"/>
+        <path class="success-check" d="M14 26 L22 34 L38 18" stroke="#81c7e1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h3 class="success-title">Demande envoyée !</h3>
+    <p class="success-message">
+      Votre demande de rendez-vous a bien été prise en charge.<br><br>
+      Notre équipe vous contactera prochainement afin de confirmer les détails.<br><br>
+      Merci pour votre confiance et à très bientôt.
+    </p>
+    <button class="success-close-btn" (click)="showSuccessModal = false; router.navigate(['/cliniques'])">
+      Fermer
+    </button>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px; /* Reduced padding for mobile */
+  background-color: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  height: 80px; /* Reduced header height for mobile */
+  box-sizing: border-box;
+}
+
+.logo {
+  height: clamp(30px, 8vw, 60px);
+  width: auto;
+  cursor: pointer;
+  transition: height 0.3s ease;
+}
+
+@media (min-width: 1024px) {
+  .logo {
+    height: 40px;
+  }
+}
+
+.discover-link {
+  text-decoration: none;
+  color: #333;
+  font-size: clamp(0.75rem, 2.5vw, 1.25rem);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap; /* Prevent wrapping but ensure it fits */
+}
+
+@media (max-width: 480px) {
+  .header {
+    height: 60px;
+    padding: 5px 10px;
+  }
+}
+

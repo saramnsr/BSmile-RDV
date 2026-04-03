@@ -1,0 +1,36 @@
+<app-header></app-header>
+<div class="container">
+  <div class="content">
+    <div class="calendar-container">
+      <h2>Planifier une Consultation</h2>
+      
+      <div class="calendar-wrapper">
+        <span class="section-label">Sélectionnez une date</span>
+        <app-calendar></app-calendar>
+      </div>
+
+      <span class="section-label">Filtrer par période</span>
+      <div class="buttons-container">
+        <button class="button" [class.active]="creneauxAffiches === creneauxDisponibles" (click)="afficherTous()">Toutes</button>
+        <button class="button" (click)="afficherMatin()">Matin</button>
+        <button class="button" (click)="afficherApresMidi()">Après Midi</button>
+      </div>
+
+      <span class="section-label">Horaires disponibles</span>
+      <div class="creneaux-container">
+        <button *ngFor="let creneau of creneauxAffiches" (click)="prendreRendezVous(creneau)" class="creneau-button">
+          {{ creneau }}
+        </button>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+    </div>
+
+    <div class="map-container">
+      <app-map></app-map>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

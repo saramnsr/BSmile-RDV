@@ -1,0 +1,83 @@
+
+::ng-deep .mat-calendar {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #fff;
+  padding: 10px;
+}
+
+::ng-deep .mat-calendar-header {
+  padding: 8px 16px 20px 16px !important;
+}
+
+::ng-deep .mat-calendar-body-selected {
+  background-color: #81c7e1 !important; /* Lighter blue as seen in screenshot */
+  color: #fff !important;
+  box-shadow: 0 4px 10px rgba(129, 199, 225, 0.3) !important;
+}
+
+::ng-deep .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+  border-color: #3498db !important;
+}
+
+::ng-deep .mat-calendar-body-cell-content {
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 50% !important;
+  transition: all 0.2s ease !important;
+}
+
+::ng-deep .mat-calendar-body-cell:hover .mat-calendar-body-cell-content {
+  background-color: rgba(52, 152, 219, 0.1) !important;
+}
+
+::ng-deep .mat-calendar-table-header th {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #333; /* Darker as seen in screenshot */
+  padding-bottom: 20px !important;
+}
+
+::ng-deep .mat-calendar-next-button, 
+::ng-deep .mat-calendar-previous-button {
+  color: #333 !important;
+}
+
+::ng-deep .mat-calendar-period-button {
+  font-weight: 500 !important;
+  background-color: #f1f3f4 !important;
+  border-radius: 4px !important;
+  margin: 0 4px !important;
+  font-size: 1.1rem !important;
+}
+
+::ng-deep .mat-calendar-arrow {
+  display: none !important;
+}
+
+::ng-deep .mat-calendar-header {
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 15px;
+}
+
+mat-calendar {
+  width: 100%;
+  max-width: 480px; /* Cap size for consistency */
+  margin: 0 auto !important; /* Center the calendar object */
+  display: block;
+}
+
+mat-card {
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+::ng-deep .mat-calendar {
+  width: 100% !important;
+  min-width: 330px !important; /* Prevents month/year view overlap */
+  box-sizing: border-box;
+}
