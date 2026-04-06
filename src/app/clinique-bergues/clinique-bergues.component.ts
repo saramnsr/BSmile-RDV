@@ -22,6 +22,7 @@ export class CliniqueBerguesComponent implements OnInit, OnDestroy {
   
   showForm: boolean = false;
   rdvSelectedDateTime: string = '';
+  isLoading: boolean = false;
   
   private subscription: Subscription = new Subscription();
 
@@ -57,9 +58,12 @@ export class CliniqueBerguesComponent implements OnInit, OnDestroy {
   }
 
   loadAvailableSlots(date: Date) {
+    this.isLoading = true;
+    this.creneauxAffiches = [];
     const formattedDate = this.formatDate(date);
     this.freeHoursService.getFreeHours(formattedDate).subscribe({
       next: (slots) => {
+        this.isLoading = false;
         console.log('Slots received by component:', slots);
         // Sort slots chronologically
         this.creneauxDisponibles = Array.from(new Set(slots)).sort();
@@ -75,6 +79,10 @@ export class CliniqueBerguesComponent implements OnInit, OnDestroy {
         
         this.errorMessage = '';
       },
+      error: (err) => {
+        this.isLoading = false;
+        this.errorMessage = 'Erreur lors du chargement des créneaux';
+      }
     });
   }
 
