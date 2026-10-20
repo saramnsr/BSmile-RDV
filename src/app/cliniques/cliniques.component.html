@@ -1,0 +1,33 @@
+<app-header></app-header>
+<div class="cliniques-container">
+  
+  <!-- FIRST CLINIC (Now showing Bergues info) -->
+  <div class="clinique">
+    <img src="assets/img/chantepoulet/chantepoulet4.jpg" alt="Clinique de Bergues">
+    <div class="overlay">
+      <div class="clinique-info">
+        <!-- Changed to Bergues -->
+        <h2>Clinique de Bergues</h2>
+        <!-- New address from the footer -->
+        <p>Chemin Armand-Dufaux 22, 1245 Collonge-Bellerive</p>
+        <p>+41 22 900 00 10</p>
+        <button (click)="goToBergues('1')" class="rdv-button">Prendre Rendez Vous</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECOND CLINIC (Original Bergues) -->
+  <div class="clinique">
+    <img src="assets/img/chantepoulet/chantepoulet2.jpg" alt="Clinique de Bergues">
+    <div class="overlay">
+      <div class="clinique-info">
+        <h2>Clinique de Bergues</h2>
+        <p>Quai des Bergues 27, 1201 Genève</p>
+        <p>+41 22 900 00 10</p>
+        <button (click)="goToBergues('2')" class="rdv-button">Prendre Rendez Vous</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<app-footer></app-footer>

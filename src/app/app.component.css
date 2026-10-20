@@ -1,0 +1,51 @@
+/* app.component.css */
+
+.container {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center-align children */
+  justify-content: center; /* Center content vertically */
+  height: 100vh; /* Use the full height of the viewport */
+  background-image: url('https://i.pinimg.com/280x280_RS/26/5c/ec/265cec41c956a1ff84fd7b753cb12c12.jpg'); /* Replace with your image path */
+  background-size: cover; /* Cover the entire container */
+  background-position: center; /* Center the background image */
+  padding: 20px; /* Add some padding around the content */
+}
+
+.content {
+  display: flex;
+  flex-direction: row; /* Align children horizontally */
+  width: 100%; /* Take the full width of the container */
+  justify-content: space-around; /* Space out the calendar and map */
+  margin-bottom: 20px; /* Add space before the buttons */
+}
+
+.calendar-container {
+  width: 30%; /* Calendar takes up 30% of the content width */
+}
+
+.map-container {
+  width: 40%; /* Map takes up 60% of the content width */
+  height: 400px; /* Set a fixed height for the map */
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  width: 100%; /* Buttons take full width of the calendar container */
+}
+
+.button {
+  padding: 10px 20px; /* Padding inside the buttons */
+  margin: 10px; /* Margin around the buttons */
+  border: 1px solid #ccc; /* Gray border for the buttons */
+  background-color: #e0e0e0; /* Gray background for the buttons */
+  color: #333; /* Darker text color for contrast */
+  cursor: pointer; /* Cursor indicates the button is clickable */
+  border-radius: 4px; /* Rounded corners for buttons */
+  text-transform: uppercase; /* Optional: makes the text uppercase */
+}
+
+.button:hover {
+  background-color: #d5d5d5; /* Slightly darker gray on hover */
+}
