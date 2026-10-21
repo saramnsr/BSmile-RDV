@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -9,8 +9,8 @@ import * as moment from 'moment';
 })
 export class FreehoursService {
 
-  //private apiUrl = 'https://chantepoulet.api.prod.basmile.clt.secure4all.tech/fauteuil/getFreeTimeIntervals';
-  private apiUrl = 'http://localhost:8080/fauteuil/getFreeTimeIntervals';
+  private apiUrl = 'https://chantepoulet.api.prod.basmile.clt.secure4all.tech/fauteuil/getFreeTimeIntervals';
+  //private apiUrl = 'http://localhost:8080/fauteuil/getFreeTimeIntervals';
 
   private authToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYkBiYXNtaWxlLmNvbSIsImV4cCI6NjIyMDIzMzk0NzEsImlhdCI6MTcyMjMzOTQ3MX0.WHAx1BN790pz8F801CBzeOXpyDMJNL5ZIOPyDLwhVQDSqSF8hYXamsRu1iiw0PmERRk5JfWdblxtlKvuUYddcA';
 
