@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { ActeService } from '../services/acte.service';
 import { AppointmentService } from '../services/appointment.service';
 import { SharedappointmentService } from '../services/sharedappointment.service';
+import { EmailService, AppointmentEmailData } from '../services/email.service';
 
 @Component({
   selector: 'app-appointment-form',
@@ -21,12 +22,14 @@ export class AppointmentFormComponent implements OnInit {
   errorMessage: string = '';
   showSuccessModal: boolean = false;
   selectedClinic: string = '';
+  selectedActeLabel: string = '';
 
   constructor(
     private sharedAppointmentService: SharedappointmentService,
     private fb: FormBuilder,
     private appointmentService: AppointmentService,
     private acteService: ActeService,
+    private emailService: EmailService,
     public router: Router,
     private route: ActivatedRoute
   ) {
@@ -86,8 +89,11 @@ export class AppointmentFormComponent implements OnInit {
 
   onActeChange(event: any): void {
     const selectedActeValue = event.target.value;
+    // Save the visible text (e.g. "Consultation bilan enfant 115.06 CHF") for the email
+    this.selectedActeLabel = event.target.options[event.target.selectedIndex].text.trim();
+
     let typeRdvId = 0; // Default for consultations
-    
+
     if (selectedActeValue === 'Blanchiment') {
       typeRdvId = 1;
     } else if (selectedActeValue === 'Détartrage') {
@@ -95,14 +101,14 @@ export class AppointmentFormComponent implements OnInit {
     } else if (selectedActeValue === 'Autre') {
       typeRdvId = 3;
     }
-    
+
     this.appointmentForm.patchValue({ typerdv: typeRdvId });
   }
 
   onSubmit(): void {
     if (this.appointmentForm.valid) {
       const formValue = this.appointmentForm.value;
-      
+
       const payload = {
         nom: formValue.nom,
         prenom: formValue.prenom,
@@ -121,6 +127,10 @@ export class AppointmentFormComponent implements OnInit {
       this.appointmentService.createAppointment(payload).subscribe(
         response => {
           console.log('Rendez-vous créé avec succès:', response);
+
+          // Send the notification email once the appointment is saved
+          this.sendNotificationEmail(formValue);
+
           this.showSuccessModal = true;
           // Auto-navigate after 6 seconds
           setTimeout(() => {
@@ -136,6 +146,27 @@ export class AppointmentFormComponent implements OnInit {
     } else {
       console.error('Le formulaire est invalide.');
     }
+  }
+
+  // Builds the email data and sends it through EmailJS
+  private sendNotificationEmail(formValue: any): void {
+    const emailData: AppointmentEmailData = {
+      civilite: formValue.civlite,
+      nom: formValue.nom,
+      prenom: formValue.prenom,
+      date_naissance: moment(formValue.dateNaissance).format('DD/MM/YYYY'),
+      patient_email: formValue.email,
+      telephone: formValue.telephone.toString(),
+      adresse: formValue.adresse,
+      acte: this.selectedActeLabel || formValue.acte,
+      clinique: this.selectedClinic || formValue.cliniques,
+      date_rdv: moment(formValue.daterdv).format('DD/MM/YYYY [à] HH:mm')
+    };
+
+    this.emailService.sendAppointmentEmail(emailData).subscribe({
+      next: (res) => console.log('✅ Email envoyé avec succès:', res.status, res.text),
+      error: (err) => console.error('❌ Erreur lors de l\'envoi de l\'email:', err)
+    });
   }
 
   isMinor(dateOfBirth: string | null): boolean {
