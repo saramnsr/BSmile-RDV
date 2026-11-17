@@ -9,7 +9,7 @@ import * as moment from 'moment';
 })
 export class FreehoursService {
 
-  private apiUrl = 'https://chantepoulet.api.prod.basmile.clt.secure4all.tech/fauteuil/getFreeTimeIntervals';
+  private apiUrl = 'https://newbasdiag.api.prod.basmile.clt.secure4all.tech/api/calendar/free-time-intervals';
   //private apiUrl = 'http://localhost:8080/fauteuil/getFreeTimeIntervals';
 
   private authToken = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYkBiYXNtaWxlLmNvbSIsImV4cCI6NjIyMDIzMzk0NzEsImlhdCI6MTcyMjMzOTQ3MX0.WHAx1BN790pz8F801CBzeOXpyDMJNL5ZIOPyDLwhVQDSqSF8hYXamsRu1iiw0PmERRk5JfWdblxtlKvuUYddcA';
@@ -21,7 +21,7 @@ export class FreehoursService {
       'Authorization': `bearer ${this.authToken}`
     });
 
-    return this.http.get<any[]>(`${this.apiUrl}/${date}`, { headers }).pipe(
+    return this.http.get<any[]>(`${this.apiUrl}?clinicId=6&date=${date}`, { headers }).pipe(
       map(response => {
         console.log(`Raw backend response for ${date}:`, response);
         return response.map(item => {
